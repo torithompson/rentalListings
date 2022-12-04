@@ -81,12 +81,8 @@ module.exports = {
 
 
 /*****************************************************************
- *        You can ignore everything below here!
+ *       Written by professor
  *****************************************************************/
-
-// don't worry too much about this function! 
-// it has been written to return the data from your database query
-// *** it DOES NOT need modifying! ***
 function querySql(sql) {
     let con = mysql.getCon();
 
