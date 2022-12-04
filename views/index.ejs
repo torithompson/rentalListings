@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+  
+    <div class = "navbar text-light py-4 bg-dark">
+      <h1><%= title %></h1>
+      <p><%= title2 %></p>
+    </div>
+    <div class ="container text-secondary">
+      <div class="row">
+        <div class="col-12 p-3">
+          <h3>Find your next vacation spot:</h3>
+        </div>
+        <div class="col border p-5 bg-light">
+          <h1>One listing</h1>
+          <form action="/airbnb/find-one">
+            <label for="bedrooms">Minimum number of bedrooms</label><br>
+            <input type="number" min="0" id="bedrooms" name="bedrooms" value="1">
+            <br><br>
+            <label for="maxGuests">Maximum number of guests</label><br>
+            <input type ="number" min="1" id="maxGuests" name="maxGuests" value="4">
+            <br><br>
+            <label for="maxPrice">Maximum price per night</label><br>
+            <input type ="number" id="maxPrice" name="maxPrice" min="0" value="100"><br><br>
+            <h2>Amenities</h2>
+                <input type="checkbox" name="amenities[]" id="wifi" value="49fcaedc-481a-4e05-934f-4867988c8ec5">
+                <label for="wifi">Wireless Internet</label><br>
+                <input type="checkbox" name="amenities[]" id="pool" value="f4e98f0a-053a-42e2-9633-0cca2a587410">
+                <label for="pool">Pool</label><br>
+                <input type="checkbox" name="amenities[]" id="breakfast" value="9c54e3ed-48b3-4438-bb2c-304e14a9bde4">
+                <label for="breakfast">Breakfast</label><br>
+                <input type="checkbox" name="amenities[]" id="Family/kid friendly" value="47327246-6852-4c70-b3db-77077ab61a32">
+                <label for="Family/kid friendly">Family Friendly</label><br>
+                <input type="checkbox" name="amenities[]" id="Gym" value="416cddd7-746e-4715-821c-3ad30b9bc3c3">
+                <label for="Gym">Gym</label><br>
+            <br><br>
+            <input type="submit" value="Send Query">
+          </form>
+        </div>
+          &nbsp;
+        <div class="col border p-5 bg-light">
+          <h1>Many listings</h1>
+          <form action="/airbnb/find-many">
+            <br>
+            <label for="bedrooms">Minimum number of bedrooms</label><br>
+            <input type="number" min="0" id="bedrooms" name="bedrooms" value="0" required>
+            <br><br>
+            <select name="state" id="stateID" required>
+              <option value="">--Select State--</option>
+            </select>
+            <br><br>
+            <select name="city" id="city" required>
+              <option value="">--Select City--</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Send Query">
+          </form>
+        </div>
+          <script type="text/javascript">
+                let statesList = document.getElementById("stateID");
+                fetch("./states")
+                    .then(response => response.json())
+                    .then(data => {
+                        for(let i = 0; i<data.length; i++) {
+                            statesList.innerHTML += `<option value = "${data[i].id}">${data[i].name}</option>`;
+                        }
+                    });
+            statesList.addEventListener("change", event => {
+                let currentState = statesList[statesList.selectedIndex];
+                let currentStateID = currentState.value;
+                
+                let cityDropdown = document.getElementById("city");
+                fetch(`./cities?state=${currentStateID}`)
+                .then(response => response.json())
+                .then(data => {
+                    cityDropdown.innerHTML = "<option value = ''>Select a city</option>";
+                  for(let i = 0;i<data.length;i++) {
+                      cityDropdown.innerHTML += `<option value = "${data[i].id}">${data[i].name}</option>`;
+                  }
+                });
+            });
+        </script>
+      </div>
+    </div>
+    <footer class="footer bg-dark p-3 mt-3 fixed-bottom">
+      <div class="container">
+        <span class ="text-muted">
+          Questions? <a href="mailto:tori.thompson@student.sl.on.ca">Email me!</a>
+        </span>
+      </div>
+  </footer>
+  </body>
+</html>

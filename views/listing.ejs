@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= listing[0].name %></title>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      </head>
+</head>
+<body>
+<div class = "navbar text-light py-4 bg-dark">
+    <h1><%= title %></h1>
+    <p><%= title2 %></p>
+</div> 
+<div class ="container text-secondary">
+    <div class ="mt-5 col-6">
+        <form action = "/">
+            <input type="submit" value="Back home"/>
+        </form>
+    </div>
+    <div class="border p-2 mt-5 bg-light mb-5">
+        <p><strong><%= listing[0].name %></strong></p>
+        <p>
+            <%- listing[0].cityName %>, 
+            <%- listing[0].stateName %>
+        </p>
+        <p>
+            <% if(listing[0].max_guest > 1){ %>
+                Max <%- listing[0].max_guest %> Guests,
+            <% } else { %>
+                Max <%- listing[0].max_guest %> Guest,
+            <% } %>
+            <% if(listing[0].number_rooms > 1) {%>
+                <%= listing[0].number_rooms %> Rooms,
+            <% } else {%>
+                <%- listing[0].number_rooms %> Room,
+            <% } %>
+            $<%- listing[0].price_by_night %> per night
+        </p>
+        <hr>
+        <p><%- listing[0].description %></p>
+        <!-- Need to differentiate between the results sent to this page, one has amenities in listing the other does not-->
+        <%if(amenities == "") {%>
+            <% if(listing[0].amenityName != ""){ %>
+                <hr>
+                <p><strong>Amenities:</strong></p>
+                <ul>
+                    <% for(let i = 0; i < listing.length; i++) {%>
+                        <li><%- listing[i].amenityName %></li>
+                    <% } %>
+                </ul>
+            <% } %>
+        <% } else { %>
+            <p><strong>Amenities:</strong></p>
+            <ul>
+                <% for(let i = 0; i < amenities.length; i++) {%>
+                    <li><%- amenities[i].name %></li>
+                <% } %>
+            </ul>
+        <% } %>
+        <hr>
+        <p align="center"><iframe src="http://maps.google.com/maps?q=<%=listing[0].latitude%>%20<%=listing[0].longitude%>&z=16&output=embed" height="300" width="500"></iframe></p>
+    </div>
+</div>
+    <footer class="footer bg-dark p-3 mt-3 fixed-bottom">
+        <div class="container">
+          <span class ="text-muted">
+            Questions? <a href="mailto:tori.thompson@student.sl.on.ca">Email me!</a>
+          </span>
+        </div>
+    </footer>
+</body>
+</html>

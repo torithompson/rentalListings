@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Found Listings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div class = "navbar text-light py-4 bg-dark">
+    <h1><%= title %></h1>
+    <p><%= title2 %></p>
+</div>
+<div class ="container text-secondary">
+    <div class ="mt-5 col-6">
+        <form action = "/">
+            <input type="submit" value="Back home"/>
+        </form>
+        </div>
+    <div class="border p-2 mt-5 bg-light mb-5">
+    <% for(let i = 0; i < listings.length; i++) {%>
+        <a href="/single-listing/?id=<%=listings[i].id%>"><%= listings[i].name %></a>
+        <p>
+            <%- listings[i].cityName %>, 
+            <%- listings[i].stateName %>
+            <iframe src="http://maps.google.com/maps?q=<%=listings[i].latitude%>%20<%=listings[i].longitude%>&z=16&output=embed" height="150" width="150"></iframe>
+        </p>
+        <p>
+            <% if(listings[i].max_guest > 1){ %>
+                Max <%- listings[i].max_guest %> Guests,
+            <% } else { %>
+                Max <%- listings[i].max_guest %> Guest,
+            <% } %>
+            <% if(listings[i].number_rooms > 1) {%>
+                <%= listings[i].number_rooms %> Rooms,
+            <% } else {%>
+                <%- listings[i].number_rooms %> Room,
+            <% } %>
+            $<%- listings[i].price_by_night %> per night</p>
+        <% } %>  
+    </div> 
+</div>
+<footer class="footer bg-dark p-3 mt-3 fixed-bottom">
+    <div class="container">
+      <span class ="text-muted">
+        Questions? <a href="mailto:tori.thompson@student.sl.on.ca">Email me!</a>
+      </span>
+    </div>
+</footer>
+</body>
+</html>
